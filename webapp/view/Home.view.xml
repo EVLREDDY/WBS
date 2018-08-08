@@ -1,0 +1,74 @@
+<mvc:View controllerName="Acc.WBS.controller.Home" xmlns:l="sap.ui.layout" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:viz="sap.viz.ui5.controls" xmlns:mc="sap.suite.ui.microchart"
+	xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:viz.data="sap.viz.ui5.data" xmlns:u="sap.ui.table">
+	<Page title="{i18n>title}">
+		<content>
+			<ObjectHeader title="Linga Reddy" condensed="true" number="3" numberUnit="Projects">
+				<attributes>
+					<ObjectAttribute text="UI5"/>
+				</attributes>
+			</ObjectHeader>
+			<u:Table rows="{/}" id="tableId" fixedColumnCount="0" visibleRowCountMode="Fixed" selectionMode="None">
+				<u:toolbar>
+					<Toolbar>
+						<content>
+							<Title id="title" text="UTIL DIRECT(AZZ0T001)"/>
+							<ToolbarSpacer/>
+						</content>
+					</Toolbar>
+				</u:toolbar>
+				<u:columns>
+					<u:Column >
+						<Label text="Task"/>
+						<u:template>
+							<ObjectIdentifier title="{Task}"/>
+						</u:template>
+					</u:Column>
+					<u:Column >
+						<Label text="Hours Charged"/>
+						<u:template>
+							<ObjectNumber number="{hoursCharged}"/>
+						</u:template>
+					</u:Column>
+					<u:Column >
+						<Label text="Days"/>
+						<u:template>
+							<Button text="Days" press="onDaysPress"/>
+						</u:template>
+					</u:Column>
+				</u:columns>
+			</u:Table>
+			<l:Grid containerQuery="true">
+				<!--	<mc:InteractiveBarChart labelWidth="25%" selectionChanged="selectionChanged" press="press">
+					<mc:bars>
+						<mc:InteractiveBarChartBar label="linga" value="10"/>
+					</mc:bars>
+				</mc:InteractiveBarChart>-->
+				<viz:Popover id="idPopOver"></viz:Popover>
+				<viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}" height='100%' width="100%" vizType='column'>
+					<viz:dataset>
+						<viz.data:FlattenedDataset data="{/}">
+							<viz.data:dimensions>
+								<viz.data:DimensionDefinition name="Week" value="{Week}"/>
+							</viz.data:dimensions>
+							<viz.data:measures>
+								<viz.data:MeasureDefinition name="Revenue" value="{Revenue}"/>
+								<viz.data:MeasureDefinition name="Cost" value="{Cost}"/>
+							</viz.data:measures>
+						</viz.data:FlattenedDataset>
+					</viz:dataset>
+					<viz:feeds>
+						<viz.feeds:FeedItem id='valueAxisFeed' uid="valueAxis" type="Measure" values="Revenue"/>
+						<viz.feeds:FeedItem id='categoryAxisFeed' uid="categoryAxis" type="Dimension" values="Week"/>
+					</viz:feeds>
+				</viz:VizFrame>
+			</l:Grid>
+		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Admin" press="onAdmin"/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
